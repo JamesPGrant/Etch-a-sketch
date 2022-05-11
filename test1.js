@@ -3,11 +3,8 @@ const RESET_COLOR = document.querySelector('.reset');
 const RANDOM_COLOR = document.querySelector('.random');
 const DEFAULT_COLOR = document.querySelector('.default');
 const ERASE_BOARD = document.querySelector('.eraser');
+const GRAY_SCALE = document.querySelector('.gray');
 const squareContainer = document.querySelector('.squareContainer');
-const square = document.createElement('div')
-square.classList.add('squares');
-
-
 
 function userInput (){
     let prompt = window.prompt("Enter the amount of squares you want to see!: ")
@@ -16,21 +13,36 @@ function userInput (){
 
     
 }
+const size = userInput();
+function sizeGrid(size){
+    squareContainer.style.gridTemplateColumns =`repeat(${size}, 1fr)`
+    squareContainer.style.gridTemplateRows =`repeat(${size}, 1fr)`
+    let NUMBER_OF_SQUARES = size * size;
+    for(let i = 0; i < NUMBER_OF_SQUARES; i++){
+        const square = document.createElement('div');
+        square.classList.add('squares');
+        squareContainer.insertAdjacentElement("beforeend", square);
+        
+        }
+    }
+sizeGrid(size)
+    
 
-const NUMBER_OF_SQUARES = userInput();
+
 
 //number input is amount of squares generated
-for(let i = 0; i < NUMBER_OF_SQUARES; i++){
-    squareContainer.appendChild(square.cloneNode(true));
-    
-    }
-
 
 squares = document.querySelectorAll('.squares')
 //for each square created when hovered over will color the square
 squares.forEach(square => square.addEventListener('mouseover', (e) => {
     square.style = 'background-color:black;';
 }))
+
+
+//reloads the page
+SET_SQUARES.addEventListener('click', ()=>{
+    window.location.reload();
+})
 
 //resets the color back to white upon click
 function resetColor(){
@@ -63,6 +75,7 @@ function eraseEtch(){
 }
 eraseEtch();
 
+//takes string of random letters and numbers that are HEX coded and returns a random color
 function getRandomColor(){
     let letters = '0123456789ABCDEF';
     let color = '#';
@@ -81,6 +94,15 @@ function useRandomColor(){
     })
 }
 useRandomColor();
+
+function greyScale(){
+    GRAY_SCALE.addEventListener('click', ()=>{
+        squares.forEach(square => square.addEventListener('mouseover', () =>{
+            square.style = `background-color: gray;`
+        }))
+    })
+}
+greyScale();
 //function setNumOfSquares(){
     //SET_SQUARES.addEventListener('click', ()=>{
         //userInput();
